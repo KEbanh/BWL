@@ -1,5 +1,5 @@
 <html><head>
-		<title>Tabelle bauen</title>
+		<title>Erlösrechner</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
 			"use strict";
 			function programm() {
@@ -26,17 +26,17 @@
 
 			vAusgabe = "";
 			vAusgabe = vAusgabe + "<table border=1>";
-			vAusgabe = vAusgabe + "<tr><th>Menge</th><th>Kosten K(x) = k<sub>F</sub> + k<sub>v</sub> * x </th><th>Erlöse E (x) = p * × </td><th>Gewinn G(x) = E(x) - K(x)</th></tr>";
+			vAusgabe = vAusgabe + "<tr><th>Menge</th><th>Kosten K(x) = k<sub>F</sub> + k<sub>v</sub> * x </th><th>Erlöse E (x) = p * × </td><th>Gewinn G(x) = E(x) - K(x)</th><th>Bemerkung</th></tr>";
 
 			while (vX <=vAnzahl) {
 				vY = vKV*vX + vKF ;
 				vE = vX* vPreis;
 				vG = vE-vY;
                 if (vG<0){
-				vAusgabe = vAusgabe + "<tr><td>" + vX + "</td><td>" + vY.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td style=color:red>" + vG.toFixed(2) + " € " + "</td></tr>";
+				vAusgabe = vAusgabe + "<tr><td>" + vX + "</td><td>" + vY.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td style=color:red>" + vG.toFixed(2) + " € " + "</td><td>Verlustzone</td></tr>";
                 }
                 else {
-                vAusgabe = vAusgabe + "<tr><td>" + vX + "</td><td>" + vY.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td>" + vG.toFixed(2) + " € " + "</td></tr>";
+                vAusgabe = vAusgabe + "<tr><td>" + vX + "</td><td>" + vY.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td>" + vG.toFixed(2) + " € " + "</td><td>Gewinnzone</td></tr>";
 
 
                 }
