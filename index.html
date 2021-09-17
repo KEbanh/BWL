@@ -1,4 +1,4 @@
-<html><head>
+<head>
 		<title>Erlösrechner</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
 			"use strict";
@@ -7,17 +7,19 @@
 
 			var vAnzahl;
 			var vAusgabe;
-			var vX;
-			var vY;
+			var vMenge;
+			var vKostGesamt;
 			var vKV;
 			var vKF;
 			var vPreis;
 			var vE, vG;
-			parseFloat(vX);
-			parseFloat(vY);
+			parseFloat(vMenge);
+			parseFloat(vKostGesamt);
 			parseFloat(vG);
 			parseFloat(vE);
-			vX = 1000;
+			vMenge = 1000;
+			var vBEP;
+			var vGewinnschwelle;
 
 			vAnzahl = parseFloat(document.getElementById("idAnzahl").value);
 			vPreis = parseFloat(document.getElementById("idPreis").value);
@@ -28,23 +30,36 @@
 			vAusgabe = vAusgabe + "<table border=1>";
 			vAusgabe = vAusgabe + "<tr><th>Menge</th><th>Kosten K(x) = k<sub>F</sub> + k<sub>v</sub> * x </th><th>Erlöse E (x) = p * × </td><th>Gewinn G(x) = E(x) - K(x)</th><th>Bemerkung</th></tr>";
 
-			while (vX <=vAnzahl) {
-				vY = vKV*vX + vKF ;
-				vE = vX* vPreis;
-				vG = vE-vY;
+			while (vMenge <=vAnzahl) {
+				vKostGesamt = vKV*vMenge + vKF ;
+				vE = vMenge* vPreis;
+				vG = vE-vKostGesamt;
                 if (vG<0){
-				vAusgabe = vAusgabe + "<tr><td>" + vX + "</td><td>" + vY.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td style=color:red>" + vG.toFixed(2) + " € " + "</td><td>Verlustzone</td></tr>";
+				vAusgabe = vAusgabe + "<tr><td>" + vMenge + "</td><td>" + vKostGesamt.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td style=color:red>" + vG.toFixed(2) + " € " + "</td><td>Verlustzone</td></tr>";
                 }
                 else {
-                vAusgabe = vAusgabe + "<tr><td>" + vX + "</td><td>" + vY.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td>" + vG.toFixed(2) + " € " + "</td><td>Gewinnzone</td></tr>";
+                vAusgabe = vAusgabe + "<tr><td>" + vMenge + "</td><td>" + vKostGesamt.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td>" + vG.toFixed(2) + " € " + "</td><td>Gewinnzone</td></tr>";
 
 
                 }
-			vX = vX + 1000;
+			vMenge = vMenge + 1000;
 }
-			vAusgabe = vAusgabe + "</table>";
 
+			vBEP=vKF/(vPreis-vKV);
+			vGewinnschwelle= vBEP*vPreis;
+			
+			vAusgabe = vAusgabe + "</table></br>";
+			vAusgabe = vAusgabe + "Break-Even-Point: ";
+			vAusgabe = vAusgabe + vBEP + " Stück </br>";
+			
+			vAusgabe = vAusgabe + "Gewinnschwelle: ";
+			vAusgabe = vAusgabe + vGewinnschwelle.toFixed(2) + " €";
+			
+			
+			
+			
 			document.getElementById("divAusgabe").innerHTML = vAusgabe;
+		
 		}
 
 		</script></head>
