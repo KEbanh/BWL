@@ -2,10 +2,10 @@
 		<title>Erlösrechner</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script>
 			"use strict";
-			function programm() {
+			function fErloesrechner() {
 			// Quellcode
 
-			var vAnzahl;
+			var vProduktionsmenge;
 			var vAusgabe;
 			var vMenge;
 			var vKostGesamt;
@@ -13,15 +13,12 @@
 			var vKF;
 			var vPreis;
 			var vE, vG;
-			parseFloat(vMenge);
-			parseFloat(vKostGesamt);
-			parseFloat(vG);
-			parseFloat(vE);
-			vMenge = 1000;
 			var vBEP;
 			var vGewinnschwelle;
+			vMenge = 1000;
+			
 
-			vAnzahl = parseFloat(document.getElementById("idAnzahl").value);
+			vProduktionsmenge = parseFloat(document.getElementById("idAnzahl").value);
 			vPreis = parseFloat(document.getElementById("idPreis").value);
 			vKV=parseFloat(document.getElementById("idKV").value);
 			vKF=parseFloat(document.getElementById("idKF").value);
@@ -30,35 +27,41 @@
 			vAusgabe = vAusgabe + "<table border=1>";
 			vAusgabe = vAusgabe + "<tr><th>Menge</th><th>Kosten K(x) = k<sub>F</sub> + k<sub>v</sub> * x </th><th>Erlöse E (x) = p * × </td><th>Gewinn G(x) = E(x) - K(x)</th><th>Bemerkung</th></tr>";
 
-			while (vMenge <=vAnzahl) {
-				vKostGesamt = vKV*vMenge + vKF ;
-				vE = vMenge* vPreis;
-				vG = vE-vKostGesamt;
-                if (vG<0){
+			// Schhleife mit der Bedingung das die Startmenge kleiner sein muss, als die Produktionsmenge
+				while (vMenge <=vProduktionsmenge) {
+					vKostGesamt = vKV*vMenge + vKF ;
+					vE = vMenge* vPreis;
+					vG = vE-vKostGesamt;
+			// Bei Gewinn unter 0, haben wir eine sogenannte Verlustzone, bitte rot markieren...
+					if (vG<0){
 				vAusgabe = vAusgabe + "<tr><td>" + vMenge + "</td><td>" + vKostGesamt.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td style=color:red>" + vG.toFixed(2) + " € " + "</td><td>Verlustzone</td></tr>";
                 }
-                else {
+			// Bei Gewinn größer 0, haben wir einen Gewinn...
+
+					else {
                 vAusgabe = vAusgabe + "<tr><td>" + vMenge + "</td><td>" + vKostGesamt.toFixed(2) + " € " + "</td><td>" + vE.toFixed(2) + " € " + "</td><td>" + vG.toFixed(2) + " € " + "</td><td>Gewinnzone</td></tr>";
-
-
                 }
-			vMenge = vMenge + 1000;
-}
+			//Hochzählen in 1000er Schritten, damit die Schleife terminiert...
+					vMenge = vMenge + 1000;
+			}
 
+			//Berechne die Gewinnschwellenmenge in Stück 
 			vBEP=vKF/(vPreis-vKV);
+			// Auf- bzw. Abrunden auf Ganze Stückzahlen. 
+			vBEP=Math.round(vBEP);
+			//Berechne die Gewinnschwelle in Euro 
 			vGewinnschwelle= vBEP*vPreis;
 			
+					
 			vAusgabe = vAusgabe + "</table></br>";
 			vAusgabe = vAusgabe + "Break-Even-Point: ";
+			// Ausgabe der Break-Even-Point Stückmenge gerundet!
 			vAusgabe = vAusgabe + vBEP + " Stück </br>";
-			
 			vAusgabe = vAusgabe + "Gewinnschwelle: ";
+			// Ausgabe des Break-Even-Points in Euro, zwei Stellen nach dem Komma. 
 			vAusgabe = vAusgabe + vGewinnschwelle.toFixed(2) + " €";
-			
-			
-			
-			
-			document.getElementById("divAusgabe").innerHTML = vAusgabe;
+			//Ausgabe der Variable vAusgabe im Div-Element 		
+			document.getElementById("idAusgabe").innerHTML = vAusgabe;
 		
 		}
 
@@ -73,8 +76,8 @@
 		Kosten-Fix: <input id="idKF" value="12800" size="6"><br/><br/>
 		Produktionsmengen(x): <input id="idAnzahl" value="20000" size="6">
 		Stückpreis(p): <input id="idPreis" value="6.00" size="6"><br/>
-		<button onclick="programm();">Kostentabelle!</button><br><br>
-        <div id="divAusgabe"></div>
+		<button onclick="fErloesrechner();">Kostentabelle!</button><br><br>
+        <div id="idAusgabe"></div>
 
 
 </body></html>
